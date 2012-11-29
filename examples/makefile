@@ -22,8 +22,8 @@ all: clean default
 default:
 	$(C_COMPILER) $(INC_DIRS) $(SYMBOLS) $(SRC_FILES1) -o $(TARGET1)
 	$(C_COMPILER) $(INC_DIRS) $(SYMBOLS) $(SRC_FILES2) -o $(TARGET2)
-	$(TARGET1)
-	$(TARGET2)
+	exec ./$(TARGET1)
+	exec ./$(TARGET2)
 
 clean:
 	$(CLEANUP)
