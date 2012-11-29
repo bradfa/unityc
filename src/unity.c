@@ -5,6 +5,7 @@
 ========================================== */
 
 #include "unity.h"
+#include "emftext.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -62,8 +63,8 @@ void UnityPrint(const char* string)
     {
         while (*pch)
         {
-            // printable characters plus CR & LF are printed
-            if ((*pch <= 126) && (*pch >= 32))
+            // printable characters plus ASCII escapes
+            if (((*pch <= 126) && (*pch >= 32)) || (*pch == 27))
             {
                 UNITY_OUTPUT_CHAR(*pch);
             }
@@ -252,7 +253,11 @@ void UnityTestResultsBegin(const char* file, const UNITY_LINE_TYPE line)
 void UnityTestResultsFailBegin(const UNITY_LINE_TYPE line)
 {
     UnityTestResultsBegin(Unity.TestFile, line);
-    UnityPrint("FAIL:");
+    UnityPrint(EMF_TEXT_BOLD);
+    UnityPrint(EMF_TEXT_RED);
+    UnityPrint("FAIL");
+    UnityPrint(EMF_TEXT_NORMAL);
+    UnityPrint(":");
 }
 
 //-----------------------------------------------
@@ -265,7 +270,10 @@ void UnityConcludeTest(void)
     else if (!Unity.CurrentTestFailed)
     {
         UnityTestResultsBegin(Unity.TestFile, Unity.CurrentTestLineNumber);
+        UnityPrint(EMF_TEXT_BOLD);
+        UnityPrint(EMF_TEXT_GREEN);
         UnityPrint("PASS");
+        UnityPrint(EMF_TEXT_NORMAL);
         UNITY_PRINT_EOL;
     }
     else
@@ -1061,7 +1069,10 @@ void UnityIgnore(const char* msg, const UNITY_LINE_TYPE line)
     UNITY_SKIP_EXECUTION;
 
     UnityTestResultsBegin(Unity.TestFile, line);
+    UnityPrint(EMF_TEXT_BOLD);
+    UnityPrint(EMF_TEXT_BLUE);
     UnityPrint("IGNORE");
+    UnityPrint(EMF_TEXT_NORMAL);
     if (msg != NULL)
     {
       UNITY_OUTPUT_CHAR(':');
