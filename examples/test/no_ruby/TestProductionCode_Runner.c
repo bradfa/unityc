@@ -18,12 +18,12 @@ static void runTest(UnityTestFunction test)
 {
   if (TEST_PROTECT())
   {
-      setUp();
-      test();
+	  setUp();
+	  test();
   }
   if (TEST_PROTECT() && !TEST_IS_IGNORED)
   {
-    tearDown();
+	tearDown();
   }
 }
 void resetTest()
