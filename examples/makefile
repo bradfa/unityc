@@ -15,7 +15,7 @@ SRC_FILES2=../src/unity.c src/ProductionCode2.c test/TestProductionCode2.c test/
 INC_DIRS=-Isrc -I../src
 SYMBOLS=-DTEST
 
-CLEANUP = rm -f build/*.o ; rm -f $(TARGET1) ; rm -f $(TARGET2)
+CLEANUP = rm -f $(TARGET1) ; rm -f $(TARGET2)
 
 all: clean default
 
