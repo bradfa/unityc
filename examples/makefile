@@ -14,16 +14,16 @@ SRC_FILES2=../src/unity.c src/ProductionCode2.c test/TestProductionCode2.c test/
 INC_DIRS=-Isrc -I../src
 SYMBOLS=-DTEST
 
-CLEANUP = rm -f $(TARGET1) ; rm -f $(TARGET2)
+all: test1 test2
 
-all: clean default
-
-default:
+test1:
 	$(CC) $(INC_DIRS) $(SYMBOLS) $(SRC_FILES1) -o $(TARGET1)
-	$(CC) $(INC_DIRS) $(SYMBOLS) $(SRC_FILES2) -o $(TARGET2)
 	exec ./$(TARGET1)
+
+test2:
+	$(CC) $(INC_DIRS) $(SYMBOLS) $(SRC_FILES2) -o $(TARGET2)
 	exec ./$(TARGET2)
 
 clean:
-	$(CLEANUP)
+	 rm -f $(TARGET1) $(TARGET2)
 	
