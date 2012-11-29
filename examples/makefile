@@ -7,11 +7,7 @@
 C_COMPILER=gcc
 TARGET_BASE1=test1
 TARGET_BASE2=test2
-ifeq ($(OS),Windows_NT)
-	TARGET_EXTENSION=.exe
-else
-	TARGET_EXTENSION=.out
-endif
+TARGET_EXTENSION=.out
 TARGET1 = $(TARGET_BASE1)$(TARGET_EXTENSION)
 TARGET2 = $(TARGET_BASE2)$(TARGET_EXTENSION)
 SRC_FILES1=../src/unity.c src/ProductionCode.c  test/TestProductionCode.c  test/no_ruby/TestProductionCode_Runner.c
@@ -19,11 +15,7 @@ SRC_FILES2=../src/unity.c src/ProductionCode2.c test/TestProductionCode2.c test/
 INC_DIRS=-Isrc -I../src
 SYMBOLS=-DTEST
 
-ifeq ($(OS),Windows_NT)
-	CLEANUP = del /F /Q build\* && del /F /Q $(TARGET1) && del /F /Q $(TARGET2)
-else
-	CLEANUP = rm -f build/*.o ; rm -f $(TARGET1) ; rm -f $(TARGET2)
-endif
+CLEANUP = rm -f build/*.o ; rm -f $(TARGET1) ; rm -f $(TARGET2)
 
 all: clean default
 
