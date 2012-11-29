@@ -4,7 +4,6 @@
 #   [Released under MIT License. Please refer to license.txt for details]
 # ========================================== 
 
-C_COMPILER=gcc
 TARGET_BASE1=test1
 TARGET_BASE2=test2
 TARGET_EXTENSION=.out
@@ -20,8 +19,8 @@ CLEANUP = rm -f $(TARGET1) ; rm -f $(TARGET2)
 all: clean default
 
 default:
-	$(C_COMPILER) $(INC_DIRS) $(SYMBOLS) $(SRC_FILES1) -o $(TARGET1)
-	$(C_COMPILER) $(INC_DIRS) $(SYMBOLS) $(SRC_FILES2) -o $(TARGET2)
+	$(CC) $(INC_DIRS) $(SYMBOLS) $(SRC_FILES1) -o $(TARGET1)
+	$(CC) $(INC_DIRS) $(SYMBOLS) $(SRC_FILES2) -o $(TARGET2)
 	exec ./$(TARGET1)
 	exec ./$(TARGET2)
 
