@@ -562,11 +562,9 @@ void UnityAssertFloatIsNaN(const _UF actual, const char* msg,
 #endif /* not UNITY_EXCLUDE_FLOAT */
 
 #ifndef UNITY_EXCLUDE_DOUBLE
-void UnityAssertEqualDoubleArray(const _UD* expected,
-								 const _UD* actual,
-								 const _UU32 num_elements,
-								 const char* msg,
-								 const UNITY_LINE_TYPE lineNumber)
+void UnityAssertEqualDoubleArray(const _UD* expected, const _UD* actual,
+		const _UU32 num_elements, const char* msg,
+		const UNITY_LINE_TYPE lineNumber)
 {
 	_UU32 elements = num_elements;
 	const _UD* ptr_expected = expected;
@@ -575,8 +573,7 @@ void UnityAssertEqualDoubleArray(const _UD* expected,
 
 	UNITY_SKIP_EXECUTION;
   
-	if (elements == 0)
-	{
+	if (elements == 0) {
 		UnityTestResultsFailBegin(lineNumber);
 		UnityPrint(UnityStrPointless);
 		UnityAddMsgIfSpecified(msg);
@@ -586,21 +583,20 @@ void UnityAssertEqualDoubleArray(const _UD* expected,
 	if (UnityCheckArraysForNull((void*)expected, (void*)actual, lineNumber, msg) == 1)
 		return;
 
-	while (elements--)
-	{
+	while (elements--) {
 		diff = *ptr_expected - *ptr_actual;
 		if (diff < 0.0)
-		  diff = 0.0 - diff;
+			diff = 0.0 - diff;
 		tol = UNITY_DOUBLE_PRECISION * *ptr_expected;
 		if (tol < 0.0)
 			tol = 0.0 - tol;
 
 		/* catch NaN or infinite values */
-		if ((diff * 0.0 != 0.0) || (diff > tol))
-		{
+		if ((diff * 0.0 != 0.0) || (diff > tol)) {
 			UnityTestResultsFailBegin(lineNumber);
 			UnityPrint(UnityStrElement);
-			UnityPrintNumberByStyle((num_elements - elements - 1), UNITY_DISPLAY_STYLE_UINT);
+			UnityPrintNumberByStyle((num_elements - elements - 1),
+					UNITY_DISPLAY_STYLE_UINT);
 #ifdef UNITY_DOUBLE_VERBOSE
 			UnityPrint(UnityStrExpected);
 			UnityPrintFloat((float)(*ptr_expected));
@@ -617,11 +613,9 @@ void UnityAssertEqualDoubleArray(const _UD* expected,
 	}
 }
 
-void UnityAssertDoublesWithin(const _UD delta,
-							  const _UD expected,
-							  const _UD actual,
-							  const char* msg,
-							  const UNITY_LINE_TYPE lineNumber)
+void UnityAssertDoublesWithin(const _UD delta, const _UD expected,
+		const _UD actual, const char* msg,
+		const UNITY_LINE_TYPE lineNumber)
 {
 	_UD diff = actual - expected;
 	_UD pos_delta = delta;
@@ -629,17 +623,12 @@ void UnityAssertDoublesWithin(const _UD delta,
 	UNITY_SKIP_EXECUTION;
   
 	if (diff < 0.0)
-	{
 		diff = 0.0 - diff;
-	}
 	if (pos_delta < 0.0)
-	{
 		pos_delta = 0.0 - pos_delta;
-	}
 
 	/* catch NaN or infinite values */
-	if ((diff * 0.0 != 0.0) || (pos_delta < diff))
-	{
+	if ((diff * 0.0 != 0.0) || (pos_delta < diff)) {
 		UnityTestResultsFailBegin(lineNumber);
 #ifdef UNITY_DOUBLE_VERBOSE
 		UnityPrint(UnityStrExpected);
@@ -654,14 +643,12 @@ void UnityAssertDoublesWithin(const _UD delta,
 	}
 }
 
-void UnityAssertDoubleIsInf(const _UD actual,
-							const char* msg,
-							const UNITY_LINE_TYPE lineNumber)
+void UnityAssertDoubleIsInf(const _UD actual, const char* msg,
+		const UNITY_LINE_TYPE lineNumber)
 {
 	UNITY_SKIP_EXECUTION;
 
-	if ((1.0 / 0.0) != actual)
-	{
+	if ((1.0 / 0.0) != actual) {
 		UnityTestResultsFailBegin(lineNumber);
 #ifdef UNITY_DOUBLE_VERBOSE
 		UnityPrint(UnityStrExpected);
@@ -676,14 +663,12 @@ void UnityAssertDoubleIsInf(const _UD actual,
 	}
 }
 
-void UnityAssertDoubleIsNegInf(const _UD actual,
-							   const char* msg,
-							   const UNITY_LINE_TYPE lineNumber)
+void UnityAssertDoubleIsNegInf(const _UD actual, const char* msg,
+		const UNITY_LINE_TYPE lineNumber)
 {
 	UNITY_SKIP_EXECUTION;
 
-	if ((-1.0 / 0.0) != actual)
-	{
+	if ((-1.0 / 0.0) != actual) {
 		UnityTestResultsFailBegin(lineNumber);
 #ifdef UNITY_DOUBLE_VERBOSE
 		UnityPrint(UnityStrExpected);
@@ -698,14 +683,12 @@ void UnityAssertDoubleIsNegInf(const _UD actual,
 	}
 }
 
-void UnityAssertDoubleIsNaN(const _UD actual,
-							const char* msg,
-							const UNITY_LINE_TYPE lineNumber)
+void UnityAssertDoubleIsNaN(const _UD actual, const char* msg,
+		const UNITY_LINE_TYPE lineNumber)
 {
 	UNITY_SKIP_EXECUTION;
 
-	if (actual == actual)
-	{
+	if (actual == actual) {
 		UnityTestResultsFailBegin(lineNumber);
 #ifdef UNITY_DOUBLE_VERBOSE
 		UnityPrint(UnityStrExpected);
@@ -719,7 +702,6 @@ void UnityAssertDoubleIsNaN(const _UD actual,
 		UNITY_FAIL_AND_BAIL;
 	}
 }
-
 #endif /* not UNITY_EXCLUDE_DOUBLE */
 
 void UnityAssertNumbersWithin( const _U_SINT delta,
