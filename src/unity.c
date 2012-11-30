@@ -11,7 +11,7 @@
 
 #define UNITY_FAIL_AND_BAIL   { Unity.CurrentTestFailed  = 1; UNITY_OUTPUT_CHAR('\n'); longjmp(Unity.AbortFrame, 1); }
 #define UNITY_IGNORE_AND_BAIL { Unity.CurrentTestIgnored = 1; UNITY_OUTPUT_CHAR('\n'); longjmp(Unity.AbortFrame, 1); }
-/// return prematurely if we are already in failure or ignore state
+/* return prematurely if we are already in failure or ignore state */
 #define UNITY_SKIP_EXECUTION  { if ((Unity.CurrentTestFailed != 0) || (Unity.CurrentTestIgnored != 0)) {return;} }
 #define UNITY_PRINT_EOL	   { UNITY_OUTPUT_CHAR('\n'); }
 
@@ -33,7 +33,7 @@ const char* UnityStrInf		= "Infinity";
 const char* UnityStrNegInf	= "Negative Infinity";
 const char* UnityStrNaN		= "NaN";
 
-// compiler-generic print formatting masks
+/* compiler-generic print formatting masks */
 const _U_UINT UnitySizeMask[] = 
 {
 	255u,
@@ -265,17 +265,14 @@ void UnityPrintExpectedAndActualStrings(const char* expected, const char* actual
 	}
 }
 
-//-----------------------------------------------
-// Assertion & Control Helpers
-//-----------------------------------------------
+/* Assertion & Control Helpers */
 
 int UnityCheckArraysForNull(const void* expected, const void* actual, const UNITY_LINE_TYPE lineNumber, const char* msg)
 {
-	//return true if they are both NULL
 	if ((expected == NULL) && (actual == NULL))
 		return 1;
 
-	//throw error if just expected is NULL
+	/* throw error if just expected is NULL */
 	if (expected == NULL)
 	{
 		UnityTestResultsFailBegin(lineNumber);
@@ -284,7 +281,7 @@ int UnityCheckArraysForNull(const void* expected, const void* actual, const UNIT
 		UNITY_FAIL_AND_BAIL;
 	}
 
-	//throw error if just actual is NULL
+	/* throw error if just actual is NULL */
 	if (actual == NULL)
 	{
 		UnityTestResultsFailBegin(lineNumber);
@@ -293,13 +290,11 @@ int UnityCheckArraysForNull(const void* expected, const void* actual, const UNIT
 		UNITY_FAIL_AND_BAIL;
 	}
 
-	//return false if neither is NULL
+	/* return false if neither is NULL */
 	return 0;
 }
 
-//-----------------------------------------------
-// Assertion Functions
-//-----------------------------------------------
+/* Assertion Functions */
 
 void UnityAssertBits(const _U_SINT mask,
 					 const _U_SINT expected,
@@ -488,7 +483,7 @@ void UnityAssertEqualFloatArray(const _UF* expected,
 		if (tol < 0.0f)
 			tol = 0.0f - tol;
 
-		//This first part of this condition will catch any NaN or Infinite values
+		/* catch NaN or infinite values */
 		if ((diff * 0.0f != 0.0f) || (diff > tol))
 		{
 			UnityTestResultsFailBegin(lineNumber);
@@ -530,7 +525,7 @@ void UnityAssertFloatsWithin(const _UF delta,
 		pos_delta = 0.0f - pos_delta;
 	}
 
-	//This first part of this condition will catch any NaN or Infinite values
+	/* catch NaN or infinite values */
 	if ((diff * 0.0f != 0.0f) || (pos_delta < diff))
 	{
 		UnityTestResultsFailBegin(lineNumber);
@@ -613,7 +608,7 @@ void UnityAssertFloatIsNaN(const _UF actual,
 	}
 }
 
-#endif //not UNITY_EXCLUDE_FLOAT
+#endif /* not UNITY_EXCLUDE_FLOAT */
 
 #ifndef UNITY_EXCLUDE_DOUBLE
 void UnityAssertEqualDoubleArray(const _UD* expected,
@@ -649,7 +644,7 @@ void UnityAssertEqualDoubleArray(const _UD* expected,
 		if (tol < 0.0)
 			tol = 0.0 - tol;
 
-		//This first part of this condition will catch any NaN or Infinite values
+		/* catch NaN or infinite values */
 		if ((diff * 0.0 != 0.0) || (diff > tol))
 		{
 			UnityTestResultsFailBegin(lineNumber);
@@ -691,7 +686,7 @@ void UnityAssertDoublesWithin(const _UD delta,
 		pos_delta = 0.0 - pos_delta;
 	}
 
-	//This first part of this condition will catch any NaN or Infinite values
+	/* catch NaN or infinite values */
 	if ((diff * 0.0 != 0.0) || (pos_delta < diff))
 	{
 		UnityTestResultsFailBegin(lineNumber);
@@ -774,7 +769,7 @@ void UnityAssertDoubleIsNaN(const _UD actual,
 	}
 }
 
-#endif // not UNITY_EXCLUDE_DOUBLE
+#endif /* not UNITY_EXCLUDE_DOUBLE */
 
 void UnityAssertNumbersWithin( const _U_SINT delta,
 							   const _U_SINT expected,
@@ -823,7 +818,6 @@ void UnityAssertEqualString(const char* expected,
 
 	UNITY_SKIP_EXECUTION;
   
-	// if both pointers not null compare the strings
 	if (expected && actual)
 	{
 		for (i = 0; expected[i] || actual[i]; i++)
@@ -836,7 +830,7 @@ void UnityAssertEqualString(const char* expected,
 		}
 	}
 	else
-	{ // handle case of one pointers being null (if both null, test should pass)
+	{
 		if (expected != actual)
 		{
 			Unity.CurrentTestFailed = 1;
@@ -862,7 +856,7 @@ void UnityAssertEqualStringArray( const char** expected,
 
 	UNITY_SKIP_EXECUTION;
   
-	// if no elements, it's an error
+	/* if no elements, it's an error */
 	if (num_elements == 0)
 	{
 		UnityTestResultsFailBegin(lineNumber);
@@ -876,7 +870,7 @@ void UnityAssertEqualStringArray( const char** expected,
 
 	do
 	{
-		// if both pointers not null compare the strings
+		/* if both pointers not null compare the strings */
 		if (expected[j] && actual[j])
 		{
 			for (i = 0; expected[j][i] || actual[j][i]; i++)
@@ -889,7 +883,8 @@ void UnityAssertEqualStringArray( const char** expected,
 			}
 		}
 		else
-		{ // handle case of one pointers being null (if both null, test should pass)
+		{ /* handle case of one pointers being null (if both null, test
+		     should pass) */
 			if (expected[j] != actual[j])
 			{
 				Unity.CurrentTestFailed = 1;
@@ -966,9 +961,7 @@ void UnityAssertEqualMemory( const void* expected,
 	}
 }
 
-//-----------------------------------------------
-// Control Functions
-//-----------------------------------------------
+/* Control Functions */
 
 void UnityFail(const char* msg, const UNITY_LINE_TYPE line)
 {
