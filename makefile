@@ -2,7 +2,7 @@
 #   Unity Project - A Test Framework for C
 #   Copyright (c) 2007 Mike Karlesky, Mark VanderVoord, Greg Williams
 #   [Released under a modified version of the MIT License.]
-# ========================================== 
+# ==========================================
 
 TARGET_BASE = testunity
 TARGET_EXTENSION=.out
@@ -22,4 +22,4 @@ default:
 
 clean:
 	$(CLEANUP)
-	
+
