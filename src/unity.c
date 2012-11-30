@@ -875,13 +875,10 @@ void UnityFail(const char* msg, const UNITY_LINE_TYPE line)
 
 	UnityTestResultsBegin(Unity.TestFile, line);
 	UnityPrintFail();
-	if (msg != NULL)
-	{
+	if (msg != NULL) {
 		UNITY_OUTPUT_CHAR(':');
 		if (msg[0] != ' ')
-		{
 		      UNITY_OUTPUT_CHAR(' ');
-		}
 		UnityPrint(msg);
 	}
 	UNITY_FAIL_AND_BAIL;
@@ -896,8 +893,7 @@ void UnityIgnore(const char* msg, const UNITY_LINE_TYPE line)
 	UnityPrint(EMF_TEXT_BLUE);
 	UnityPrint("IGNORE");
 	UnityPrint(EMF_TEXT_NORMAL);
-	if (msg != NULL)
-	{
+	if (msg != NULL) {
 	  UNITY_OUTPUT_CHAR(':');
 	  UNITY_OUTPUT_CHAR(' ');
 	  UnityPrint(msg);
@@ -907,20 +903,18 @@ void UnityIgnore(const char* msg, const UNITY_LINE_TYPE line)
 
 void setUp(void);
 void tearDown(void);
-void UnityDefaultTestRun(UnityTestFunction Func, const char* FuncName, const int FuncLineNum)
+void UnityDefaultTestRun(UnityTestFunction Func, const char* FuncName,
+		const int FuncLineNum)
 {
 	Unity.CurrentTestName = FuncName;
 	Unity.CurrentTestLineNumber = FuncLineNum;
 	Unity.NumberOfTests++;
-	if (TEST_PROTECT())
-	{
+	if (TEST_PROTECT()) {
 		setUp();
 		Func();
 	}
 	if (TEST_PROTECT() && !(Unity.CurrentTestIgnored))
-	{
 		tearDown();
-	}
 	UnityConcludeTest();
 }
 
@@ -945,13 +939,9 @@ int UnityEnd(void)
 	UnityPrint(" Ignored");
 	UNITY_PRINT_EOL;
 	if (Unity.TestFailures == 0U)
-	{
 		UnityPrintOk();
-	}
 	else
-	{
 		UnityPrintFail();
-	}
 	UNITY_PRINT_EOL;
 	return Unity.TestFailures;
 }
