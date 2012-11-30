@@ -283,16 +283,13 @@ int UnityCheckArraysForNull(const void* expected, const void* actual,
 
 /* Assertion Functions */
 
-void UnityAssertBits(const _U_SINT mask,
-					 const _U_SINT expected,
-					 const _U_SINT actual,
-					 const char* msg,
-					 const UNITY_LINE_TYPE lineNumber)
+void UnityAssertBits(const _U_SINT mask, const _U_SINT expected,
+		const _U_SINT actual, const char* msg,
+		const UNITY_LINE_TYPE lineNumber)
 {
 	UNITY_SKIP_EXECUTION;
   
-	if ((mask & expected) != (mask & actual))
-	{
+	if ((mask & expected) != (mask & actual)) {
 		UnityTestResultsFailBegin(lineNumber);
 		UnityPrint(UnityStrExpected);
 		UnityPrintMask(mask, expected);
@@ -303,16 +300,13 @@ void UnityAssertBits(const _U_SINT mask,
 	}
 }
 
-void UnityAssertEqualNumber(const _U_SINT expected,
-							const _U_SINT actual,
-							const char* msg,
-							const UNITY_LINE_TYPE lineNumber,
-							const UNITY_DISPLAY_STYLE_T style)
+void UnityAssertEqualNumber(const _U_SINT expected, const _U_SINT actual,
+		const char* msg, const UNITY_LINE_TYPE lineNumber,
+		const UNITY_DISPLAY_STYLE_T style)
 {
 	UNITY_SKIP_EXECUTION;
 
-	if (expected != actual)
-	{
+	if (expected != actual) {
 		UnityTestResultsFailBegin(lineNumber);
 		UnityPrint(UnityStrExpected);
 		UnityPrintNumberByStyle(expected, style);
