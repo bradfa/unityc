@@ -465,7 +465,7 @@ void UnityAssertEqualFloatArray(const _UF* expected,
 			UnityPrintFloat(*ptr_actual);
 #else
 			UnityPrint(UnityStrDelta);
-#endif
+#endif /* UNITY_FLOAT_VERBOSE */
 			UnityAddMsgIfSpecified(msg);
 			UNITY_FAIL_AND_BAIL;
 		}
@@ -505,7 +505,7 @@ void UnityAssertFloatsWithin(const _UF delta,
 		UnityPrintFloat(actual);
 #else
 		UnityPrint(UnityStrDelta);
-#endif
+#endif /* UNITY_FLOAT_VERBOSE */
 		UnityAddMsgIfSpecified(msg);
 		UNITY_FAIL_AND_BAIL;
 	}
@@ -527,7 +527,7 @@ void UnityAssertFloatIsInf(const _UF actual,
 		UnityPrintFloat(actual);
 #else
 		UnityPrint(UnityStrDelta);
-#endif
+#endif /* UNITY_FLOAT_VERBOSE */
 		UnityAddMsgIfSpecified(msg);
 		UNITY_FAIL_AND_BAIL;
 	}
@@ -549,7 +549,7 @@ void UnityAssertFloatIsNegInf(const _UF actual,
 		UnityPrintFloat(actual);
 #else
 		UnityPrint(UnityStrDelta);
-#endif
+#endif /* UNITY_FLOAT_VERBOSE */
 		UnityAddMsgIfSpecified(msg);
 		UNITY_FAIL_AND_BAIL;
 	}
@@ -571,7 +571,7 @@ void UnityAssertFloatIsNaN(const _UF actual,
 		UnityPrintFloat(actual);
 #else
 		UnityPrint(UnityStrDelta);
-#endif
+#endif /* UNITY_FLOAT_VERBOSE */
 		UnityAddMsgIfSpecified(msg);
 		UNITY_FAIL_AND_BAIL;
 	}
@@ -626,7 +626,7 @@ void UnityAssertEqualDoubleArray(const _UD* expected,
 			UnityPrintFloat((float)(*ptr_actual));
 #else
 			UnityPrint(UnityStrDelta);
-#endif
+#endif /* UNITY_DOUBLE_VERBOSE */
 			UnityAddMsgIfSpecified(msg);
 			UNITY_FAIL_AND_BAIL;
 		}
@@ -666,7 +666,7 @@ void UnityAssertDoublesWithin(const _UD delta,
 		UnityPrintFloat((float)actual);
 #else
 		UnityPrint(UnityStrDelta);
-#endif
+#endif /* UNITY_DOUBLE_VERBOSE */
 		UnityAddMsgIfSpecified(msg);
 		UNITY_FAIL_AND_BAIL;
 	}
@@ -688,7 +688,7 @@ void UnityAssertDoubleIsInf(const _UD actual,
 		UnityPrintFloat((float)actual);
 #else
 		UnityPrint(UnityStrDelta);
-#endif
+#endif /* UNITY_DOUBLE_VERBOSE */
 		UnityAddMsgIfSpecified(msg);
 		UNITY_FAIL_AND_BAIL;
 	}
@@ -710,7 +710,7 @@ void UnityAssertDoubleIsNegInf(const _UD actual,
 		UnityPrintFloat((float)actual);
 #else
 		UnityPrint(UnityStrDelta);
-#endif
+#endif /* UNITY_DOUBLE_VERBOSE */
 		UnityAddMsgIfSpecified(msg);
 		UNITY_FAIL_AND_BAIL;
 	}
@@ -732,7 +732,7 @@ void UnityAssertDoubleIsNaN(const _UD actual,
 		UnityPrintFloat((float)actual);
 #else
 		UnityPrint(UnityStrDelta);
-#endif
+#endif /* UNITY_DOUBLE_VERBOSE */
 		UnityAddMsgIfSpecified(msg);
 		UNITY_FAIL_AND_BAIL;
 	}
