@@ -211,21 +211,16 @@ void UnityTestResultsFailBegin(const UNITY_LINE_TYPE line)
 
 void UnityConcludeTest(void)
 {
-	if (Unity.CurrentTestIgnored)
-	{
+	if (Unity.CurrentTestIgnored) {
 		Unity.TestIgnores++;
-	}
-	else if (!Unity.CurrentTestFailed)
-	{
+	} else if (!Unity.CurrentTestFailed) {
 		UnityTestResultsBegin(Unity.TestFile, Unity.CurrentTestLineNumber);
 		UnityPrint(EMF_TEXT_BOLD);
 		UnityPrint(EMF_TEXT_GREEN);
 		UnityPrint("PASS");
 		UnityPrint(EMF_TEXT_NORMAL);
 		UNITY_PRINT_EOL;
-	}
-	else
-	{
+	} else {
 		Unity.TestFailures++;
 	}
 
@@ -235,8 +230,7 @@ void UnityConcludeTest(void)
 
 void UnityAddMsgIfSpecified(const char* msg)
 {
-	if (msg)
-	{
+	if (msg) {
 		UnityPrint(UnityStrSpacer);
 		UnityPrint(msg);
 	}
@@ -245,26 +239,20 @@ void UnityAddMsgIfSpecified(const char* msg)
 void UnityPrintExpectedAndActualStrings(const char* expected, const char* actual)
 {
 	UnityPrint(UnityStrExpected);
-	if (expected != NULL)
-	{
+	if (expected != NULL) {
 		UNITY_OUTPUT_CHAR('\'');
 		UnityPrint(expected);
 		UNITY_OUTPUT_CHAR('\'');
-	}
-	else
-	{
+	} else {
 	  UnityPrint(UnityStrNull);
 	}
 	UnityPrint(UnityStrWas);
-	if (actual != NULL)
-	{
+	if (actual != NULL) {
 		UNITY_OUTPUT_CHAR('\'');
 		UnityPrint(actual);
 		UNITY_OUTPUT_CHAR('\'');
-	}
-	else
-	{
-	  UnityPrint(UnityStrNull);
+	} else {
+		UnityPrint(UnityStrNull);
 	}
 }
 
