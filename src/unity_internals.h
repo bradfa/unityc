@@ -1,8 +1,7 @@
-/* ==========================================
-	Unity Project - A Test Framework for C
-	Copyright (c) 2007 Mike Karlesky, Mark VanderVoord, Greg Williams
-	[Released under a modified version of the MIT License.]
-========================================== */
+/*
+ * Copyright (c) 2007 Mike Karlesky, Mark VanderVoord, Greg Williams
+ * Released under a modified version of the MIT License
+ */
 
 #ifndef UNITY_INTERNALS_H
 #define UNITY_INTERNALS_H

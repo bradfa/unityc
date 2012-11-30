@@ -1,9 +1,8 @@
-//- Copyright (c) 2010 James Grenning and Contributed to Unity Project
-/* ==========================================
-	Unity Project - A Test Framework for C
-	Copyright (c) 2007 Mike Karlesky, Mark VanderVoord, Greg Williams
-	[Released under a modified version of the MIT License.]
-========================================== */
+/*
+ * Copyright (c) 2010 James Grenning and Contributed to Unity Project
+ * Copyright (c) 2007 Mike Karlesky, Mark VanderVoord, Greg Williams
+ * Released under a modified version of the MIT License
+ */
 
 #include "unity_fixture.h"
 
