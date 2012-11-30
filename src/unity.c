@@ -77,40 +77,30 @@ void UnityPrint(const char* pch)
 	}
 }
 
-//-----------------------------------------------
-void UnityPrintNumberByStyle(const _U_SINT number, const UNITY_DISPLAY_STYLE_T style)
+void UnityPrintNumberByStyle(const _U_SINT number,
+		const UNITY_DISPLAY_STYLE_T style)
 {
 	if ((style & UNITY_DISPLAY_RANGE_INT) == UNITY_DISPLAY_RANGE_INT)
-	{
 		UnityPrintNumber(number);
-	}
 	else if ((style & UNITY_DISPLAY_RANGE_UINT) == UNITY_DISPLAY_RANGE_UINT)
-	{
-		UnityPrintNumberUnsigned(  (_U_UINT)number  &  UnitySizeMask[((_U_UINT)style & (_U_UINT)0x0F) - 1]  );
-	}
+		UnityPrintNumberUnsigned((_U_UINT)number
+				& UnitySizeMask[((_U_UINT)style & (_U_UINT)0x0F) - 1]);
 	else
-	{
 		UnityPrintNumberHex((_U_UINT)number, (style & 0x000F) << 1);
-	}
 }
 
-//-----------------------------------------------
-/// basically do an itoa using as little ram as possible
 void UnityPrintNumber(const _U_SINT number_to_print)
 {
 	_U_SINT divisor = 1;
 	_U_SINT next_divisor;
 	_U_SINT number = number_to_print;
 
-	if (number < 0)
-	{
+	if (number < 0)	{
 		UNITY_OUTPUT_CHAR('-');
 		number = -number;
 	}
 
-	// figure out initial divisor
-	while (number / divisor > 9)
-	{
+	while (number / divisor > 9) {
 		next_divisor = divisor * 10;
 		if (next_divisor > divisor)
 			divisor = next_divisor;
@@ -118,25 +108,18 @@ void UnityPrintNumber(const _U_SINT number_to_print)
 			break;
 	}
 
-	// now mod and print, then divide divisor
-	do
-	{
+	do {
 		UNITY_OUTPUT_CHAR((char)('0' + (number / divisor % 10)));
 		divisor /= 10;
-	}
-	while (divisor > 0);
+	} while (divisor > 0);
 }
 
-//-----------------------------------------------
-/// basically do an itoa using as little ram as possible
 void UnityPrintNumberUnsigned(const _U_UINT number)
 {
 	_U_UINT divisor = 1;
 	_U_UINT next_divisor;
 
-	// figure out initial divisor
-	while (number / divisor > 9)
-	{
+	while (number / divisor > 9) {
 		next_divisor = divisor * 10;
 		if (next_divisor > divisor)
 			divisor = next_divisor;
@@ -144,16 +127,12 @@ void UnityPrintNumberUnsigned(const _U_UINT number)
 			break;
 	}
 
-	// now mod and print, then divide divisor
-	do
-	{
+	do {
 		UNITY_OUTPUT_CHAR((char)('0' + (number / divisor % 10)));
 		divisor /= 10;
-	}
-	while (divisor > 0);
+	} while (divisor > 0);
 }
 
-//-----------------------------------------------
 void UnityPrintNumberHex(const _U_UINT number, const char nibbles_to_print)
 {
 	_U_UINT nibble;
@@ -161,17 +140,12 @@ void UnityPrintNumberHex(const _U_UINT number, const char nibbles_to_print)
 	UNITY_OUTPUT_CHAR('0');
 	UNITY_OUTPUT_CHAR('x');
 
-	while (nibbles > 0)
-	{
+	while (nibbles > 0) {
 		nibble = (number >> (--nibbles << 2)) & 0x0000000F;
 		if (nibble <= 9)
-		{
 			UNITY_OUTPUT_CHAR((char)('0' + nibble));
-		}
 		else
-		{
 			UNITY_OUTPUT_CHAR((char)('A' - 10 + nibble));
-		}
 	}
 }
 
