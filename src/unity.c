@@ -419,11 +419,9 @@ void UnityAssertEqualIntArray(const _U_SINT* expected, const _U_SINT* actual,
 }
 
 #ifndef UNITY_EXCLUDE_FLOAT
-void UnityAssertEqualFloatArray(const _UF* expected,
-								const _UF* actual,
-								const _UU32 num_elements,
-								const char* msg,
-								const UNITY_LINE_TYPE lineNumber)
+void UnityAssertEqualFloatArray(const _UF* expected, const _UF* actual,
+		const _UU32 num_elements, const char* msg,
+		const UNITY_LINE_TYPE lineNumber)
 {
 	_UU32 elements = num_elements;
 	const _UF* ptr_expected = expected;
@@ -432,8 +430,7 @@ void UnityAssertEqualFloatArray(const _UF* expected,
 
 	UNITY_SKIP_EXECUTION;
   
-	if (elements == 0)
-	{
+	if (elements == 0) {
 		UnityTestResultsFailBegin(lineNumber);
 		UnityPrint(UnityStrPointless);
 		UnityAddMsgIfSpecified(msg);
@@ -443,21 +440,20 @@ void UnityAssertEqualFloatArray(const _UF* expected,
 	if (UnityCheckArraysForNull((void*)expected, (void*)actual, lineNumber, msg) == 1)
 		return;
 
-	while (elements--)
-	{
+	while (elements--) {
 		diff = *ptr_expected - *ptr_actual;
 		if (diff < 0.0f)
-		  diff = 0.0f - diff;
+			diff = 0.0f - diff;
 		tol = UNITY_FLOAT_PRECISION * *ptr_expected;
 		if (tol < 0.0f)
 			tol = 0.0f - tol;
 
 		/* catch NaN or infinite values */
-		if ((diff * 0.0f != 0.0f) || (diff > tol))
-		{
+		if ((diff * 0.0f != 0.0f) || (diff > tol)) {
 			UnityTestResultsFailBegin(lineNumber);
 			UnityPrint(UnityStrElement);
-			UnityPrintNumberByStyle((num_elements - elements - 1), UNITY_DISPLAY_STYLE_UINT);
+			UnityPrintNumberByStyle((num_elements - elements - 1),
+					UNITY_DISPLAY_STYLE_UINT);
 #ifdef UNITY_FLOAT_VERBOSE
 			UnityPrint(UnityStrExpected);
 			UnityPrintFloat(*ptr_expected);
@@ -474,11 +470,9 @@ void UnityAssertEqualFloatArray(const _UF* expected,
 	}
 }
 
-void UnityAssertFloatsWithin(const _UF delta,
-							 const _UF expected,
-							 const _UF actual,
-							 const char* msg,
-							 const UNITY_LINE_TYPE lineNumber)
+void UnityAssertFloatsWithin(const _UF delta, const _UF expected,
+		const _UF actual, const char* msg,
+		const UNITY_LINE_TYPE lineNumber)
 {
 	_UF diff = actual - expected;
 	_UF pos_delta = delta;
@@ -486,17 +480,12 @@ void UnityAssertFloatsWithin(const _UF delta,
 	UNITY_SKIP_EXECUTION;
   
 	if (diff < 0.0f)
-	{
 		diff = 0.0f - diff;
-	}
 	if (pos_delta < 0.0f)
-	{
 		pos_delta = 0.0f - pos_delta;
-	}
 
 	/* catch NaN or infinite values */
-	if ((diff * 0.0f != 0.0f) || (pos_delta < diff))
-	{
+	if ((diff * 0.0f != 0.0f) || (pos_delta < diff)) {
 		UnityTestResultsFailBegin(lineNumber);
 #ifdef UNITY_FLOAT_VERBOSE
 		UnityPrint(UnityStrExpected);
@@ -511,14 +500,12 @@ void UnityAssertFloatsWithin(const _UF delta,
 	}
 }
 
-void UnityAssertFloatIsInf(const _UF actual,
-						   const char* msg,
-						   const UNITY_LINE_TYPE lineNumber)
+void UnityAssertFloatIsInf(const _UF actual, const char* msg,
+		const UNITY_LINE_TYPE lineNumber)
 {
 	UNITY_SKIP_EXECUTION;
 
-	if ((1.0f / 0.0f) != actual)
-	{
+	if ((1.0f / 0.0f) != actual) {
 		UnityTestResultsFailBegin(lineNumber);
 #ifdef UNITY_FLOAT_VERBOSE
 		UnityPrint(UnityStrExpected);
@@ -533,14 +520,12 @@ void UnityAssertFloatIsInf(const _UF actual,
 	}
 }
 
-void UnityAssertFloatIsNegInf(const _UF actual,
-							  const char* msg,
-							  const UNITY_LINE_TYPE lineNumber)
+void UnityAssertFloatIsNegInf(const _UF actual, const char* msg,
+		const UNITY_LINE_TYPE lineNumber)
 {
 	UNITY_SKIP_EXECUTION;
 
-	if ((-1.0f / 0.0f) != actual)
-	{
+	if ((-1.0f / 0.0f) != actual) {
 		UnityTestResultsFailBegin(lineNumber);
 #ifdef UNITY_FLOAT_VERBOSE
 		UnityPrint(UnityStrExpected);
@@ -555,14 +540,12 @@ void UnityAssertFloatIsNegInf(const _UF actual,
 	}
 }
 
-void UnityAssertFloatIsNaN(const _UF actual,
-						   const char* msg,
-						   const UNITY_LINE_TYPE lineNumber)
+void UnityAssertFloatIsNaN(const _UF actual, const char* msg,
+		const UNITY_LINE_TYPE lineNumber)
 {
 	UNITY_SKIP_EXECUTION;
 
-	if (actual == actual)
-	{
+	if (actual == actual) {
 		UnityTestResultsFailBegin(lineNumber);
 #ifdef UNITY_FLOAT_VERBOSE
 		UnityPrint(UnityStrExpected);
@@ -576,7 +559,6 @@ void UnityAssertFloatIsNaN(const _UF actual,
 		UNITY_FAIL_AND_BAIL;
 	}
 }
-
 #endif /* not UNITY_EXCLUDE_FLOAT */
 
 #ifndef UNITY_EXCLUDE_DOUBLE
