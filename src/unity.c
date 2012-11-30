@@ -51,43 +51,29 @@ const _U_UINT UnitySizeMask[] =
 void UnityPrintFail(void);
 void UnityPrintOk(void);
 
-//-----------------------------------------------
-// Pretty Printers & Test Result Output Handlers
-//-----------------------------------------------
-
-void UnityPrint(const char* string)
+void UnityPrint(const char* pch)
 {
-	const char* pch = string;
+	if (pch == NULL)
+		return;
 
-	if (pch != NULL)
-	{
-		while (*pch)
-		{
-			// printable characters plus ASCII escapes
-			if (((*pch <= 126) && (*pch >= 32)) || (*pch == 27))
-			{
-				UNITY_OUTPUT_CHAR(*pch);
-			}
-			//write escaped carriage returns
-			else if (*pch == 13)
-			{
-				UNITY_OUTPUT_CHAR('\\');
-				UNITY_OUTPUT_CHAR('r');
-			}
-			//write escaped line feeds
-			else if (*pch == 10)
-			{
-				UNITY_OUTPUT_CHAR('\\');
-				UNITY_OUTPUT_CHAR('n');
-			}
-			// unprintable characters are shown as codes
-			else
-			{
-				UNITY_OUTPUT_CHAR('\\');
-				UnityPrintNumberHex((_U_SINT)*pch, 2);
-			}
-			pch++;
+	while (*pch) {
+		if (((*pch >= 0x20) && (*pch <= 0x7E)) || (*pch == 0x1B)) {
+			/* printable characters and ASCII escapes */
+			UNITY_OUTPUT_CHAR(*pch);
+		} else if (*pch == 0x0D) {
+			/* escaped carriage returns */
+			UNITY_OUTPUT_CHAR('\\');
+			UNITY_OUTPUT_CHAR('r');
+		} else if (*pch == 0x0A) {
+			/* escaped line feeds */
+			UNITY_OUTPUT_CHAR('\\');
+			UNITY_OUTPUT_CHAR('n');
+		} else {
+			/* unprintable characters as codes */
+			UNITY_OUTPUT_CHAR('\\');
+			UnityPrintNumberHex((_U_SINT)*pch, 2);
 		}
+		pch++;
 	}
 }
 
