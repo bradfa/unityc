@@ -317,12 +317,10 @@ void UnityAssertEqualNumber(const _U_SINT expected, const _U_SINT actual,
 	}
 }
 
-void UnityAssertEqualIntArray(const _U_SINT* expected,
-							  const _U_SINT* actual,
-							  const _UU32 num_elements,
-							  const char* msg,
-							  const UNITY_LINE_TYPE lineNumber,
-							  const UNITY_DISPLAY_STYLE_T style)
+void UnityAssertEqualIntArray(const _U_SINT* expected, const _U_SINT* actual,
+		const _UU32 num_elements, const char* msg,
+		const UNITY_LINE_TYPE lineNumber,
+		const UNITY_DISPLAY_STYLE_T style)
 {
 	_UU32 elements = num_elements;
 	const _US8* ptr_exp = (_US8*)expected;
@@ -330,8 +328,7 @@ void UnityAssertEqualIntArray(const _U_SINT* expected,
 
 	UNITY_SKIP_EXECUTION;
   
-	if (elements == 0)
-	{
+	if (elements == 0) {
 		UnityTestResultsFailBegin(lineNumber);
 		UnityPrint(UnityStrPointless);
 		UnityAddMsgIfSpecified(msg);
@@ -341,92 +338,83 @@ void UnityAssertEqualIntArray(const _U_SINT* expected,
 	if (UnityCheckArraysForNull((void*)expected, (void*)actual, lineNumber, msg) == 1)
 		return;
 
-	switch(style)
-	{
-		case UNITY_DISPLAY_STYLE_HEX8:
-		case UNITY_DISPLAY_STYLE_INT8:
-		case UNITY_DISPLAY_STYLE_UINT8:
-			while (elements--)
-			{
-				if (*ptr_exp != *ptr_act)
-				{
-					UnityTestResultsFailBegin(lineNumber);
-					UnityPrint(UnityStrElement);
-					UnityPrintNumberByStyle((num_elements - elements - 1), UNITY_DISPLAY_STYLE_UINT);
-					UnityPrint(UnityStrExpected);
-					UnityPrintNumberByStyle(*ptr_exp, style);
-					UnityPrint(UnityStrWas);
-					UnityPrintNumberByStyle(*ptr_act, style);
-					UnityAddMsgIfSpecified(msg);
-					UNITY_FAIL_AND_BAIL;
-				}
-				ptr_exp += 1;
-				ptr_act += 1;
+	switch(style) {
+	case UNITY_DISPLAY_STYLE_HEX8:
+	case UNITY_DISPLAY_STYLE_INT8:
+	case UNITY_DISPLAY_STYLE_UINT8:
+		while (elements--) {
+			if (*ptr_exp != *ptr_act) {
+				UnityTestResultsFailBegin(lineNumber);
+				UnityPrint(UnityStrElement);
+				UnityPrintNumberByStyle((num_elements - elements - 1), UNITY_DISPLAY_STYLE_UINT);
+				UnityPrint(UnityStrExpected);
+				UnityPrintNumberByStyle(*ptr_exp, style);
+				UnityPrint(UnityStrWas);
+				UnityPrintNumberByStyle(*ptr_act, style);
+				UnityAddMsgIfSpecified(msg);
+				UNITY_FAIL_AND_BAIL;
 			}
-			break;
-		case UNITY_DISPLAY_STYLE_HEX16:
-		case UNITY_DISPLAY_STYLE_INT16:
-		case UNITY_DISPLAY_STYLE_UINT16:
-			while (elements--)
-			{
-				if (*(_US16*)ptr_exp != *(_US16*)ptr_act)
-				{
-					UnityTestResultsFailBegin(lineNumber);
-					UnityPrint(UnityStrElement);
-					UnityPrintNumberByStyle((num_elements - elements - 1), UNITY_DISPLAY_STYLE_UINT);
-					UnityPrint(UnityStrExpected);
-					UnityPrintNumberByStyle(*(_US16*)ptr_exp, style);
-					UnityPrint(UnityStrWas);
-					UnityPrintNumberByStyle(*(_US16*)ptr_act, style);
-					UnityAddMsgIfSpecified(msg);
-					UNITY_FAIL_AND_BAIL;
-				}
-				ptr_exp += 2;
-				ptr_act += 2;
+			ptr_exp += 1;
+			ptr_act += 1;
+		}
+		break;
+	case UNITY_DISPLAY_STYLE_HEX16:
+	case UNITY_DISPLAY_STYLE_INT16:
+	case UNITY_DISPLAY_STYLE_UINT16:
+		while (elements--) {
+			if (*(_US16*)ptr_exp != *(_US16*)ptr_act) {
+				UnityTestResultsFailBegin(lineNumber);
+				UnityPrint(UnityStrElement);
+				UnityPrintNumberByStyle((num_elements - elements - 1), UNITY_DISPLAY_STYLE_UINT);
+				UnityPrint(UnityStrExpected);
+				UnityPrintNumberByStyle(*(_US16*)ptr_exp, style);
+				UnityPrint(UnityStrWas);
+				UnityPrintNumberByStyle(*(_US16*)ptr_act, style);
+				UnityAddMsgIfSpecified(msg);
+				UNITY_FAIL_AND_BAIL;
 			}
-			break;
+			ptr_exp += 2;
+			ptr_act += 2;
+		}
+		break;
 #ifdef UNITY_SUPPORT_64
-		case UNITY_DISPLAY_STYLE_HEX64:
-		case UNITY_DISPLAY_STYLE_INT64:
-		case UNITY_DISPLAY_STYLE_UINT64:
-			while (elements--)
-			{
-				if (*(_US64*)ptr_exp != *(_US64*)ptr_act)
-				{
-					UnityTestResultsFailBegin(lineNumber);
-					UnityPrint(UnityStrElement);
-					UnityPrintNumberByStyle((num_elements - elements - 1), UNITY_DISPLAY_STYLE_UINT);
-					UnityPrint(UnityStrExpected);
-					UnityPrintNumberByStyle(*(_US64*)ptr_exp, style);
-					UnityPrint(UnityStrWas);
-					UnityPrintNumberByStyle(*(_US64*)ptr_act, style);
-					UnityAddMsgIfSpecified(msg);
-					UNITY_FAIL_AND_BAIL;
-				}
-				ptr_exp += 8;
-				ptr_act += 8;
+	case UNITY_DISPLAY_STYLE_HEX64:
+	case UNITY_DISPLAY_STYLE_INT64:
+	case UNITY_DISPLAY_STYLE_UINT64:
+		while (elements--) {
+			if (*(_US64*)ptr_exp != *(_US64*)ptr_act) {
+				UnityTestResultsFailBegin(lineNumber);
+				UnityPrint(UnityStrElement);
+				UnityPrintNumberByStyle((num_elements - elements - 1), UNITY_DISPLAY_STYLE_UINT);
+				UnityPrint(UnityStrExpected);
+				UnityPrintNumberByStyle(*(_US64*)ptr_exp, style);
+				UnityPrint(UnityStrWas);
+				UnityPrintNumberByStyle(*(_US64*)ptr_act, style);
+				UnityAddMsgIfSpecified(msg);
+				UNITY_FAIL_AND_BAIL;
 			}
-			break;
-#endif
-		default:
-			while (elements--)
-			{
-				if (*(_US32*)ptr_exp != *(_US32*)ptr_act)
-				{
-					UnityTestResultsFailBegin(lineNumber);
-					UnityPrint(UnityStrElement);
-					UnityPrintNumberByStyle((num_elements - elements - 1), UNITY_DISPLAY_STYLE_UINT);
-					UnityPrint(UnityStrExpected);
-					UnityPrintNumberByStyle(*(_US32*)ptr_exp, style);
-					UnityPrint(UnityStrWas);
-					UnityPrintNumberByStyle(*(_US32*)ptr_act, style);
-					UnityAddMsgIfSpecified(msg);
-					UNITY_FAIL_AND_BAIL;
-				}
-				ptr_exp += 4;
-				ptr_act += 4;
+			ptr_exp += 8;
+			ptr_act += 8;
+		}
+		break;
+#endif /* UNITY_SUPPORT_64 */
+	default:
+		while (elements--) {
+			if (*(_US32*)ptr_exp != *(_US32*)ptr_act) {
+				UnityTestResultsFailBegin(lineNumber);
+				UnityPrint(UnityStrElement);
+				UnityPrintNumberByStyle((num_elements - elements - 1), UNITY_DISPLAY_STYLE_UINT);
+				UnityPrint(UnityStrExpected);
+				UnityPrintNumberByStyle(*(_US32*)ptr_exp, style);
+				UnityPrint(UnityStrWas);
+				UnityPrintNumberByStyle(*(_US32*)ptr_act, style);
+				UnityAddMsgIfSpecified(msg);
+				UNITY_FAIL_AND_BAIL;
 			}
-			break;
+			ptr_exp += 4;
+			ptr_act += 4;
+		}
+		break;
 	}
 }
 
