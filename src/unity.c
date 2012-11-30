@@ -258,30 +258,26 @@ void UnityPrintExpectedAndActualStrings(const char* expected, const char* actual
 
 /* Assertion & Control Helpers */
 
-int UnityCheckArraysForNull(const void* expected, const void* actual, const UNITY_LINE_TYPE lineNumber, const char* msg)
+int UnityCheckArraysForNull(const void* expected, const void* actual,
+		const UNITY_LINE_TYPE lineNumber, const char* msg)
 {
 	if ((expected == NULL) && (actual == NULL))
 		return 1;
 
-	/* throw error if just expected is NULL */
-	if (expected == NULL)
-	{
+	if (expected == NULL) {
 		UnityTestResultsFailBegin(lineNumber);
 		UnityPrint(UnityStrNullPointerForExpected);
 		UnityAddMsgIfSpecified(msg);
 		UNITY_FAIL_AND_BAIL;
 	}
 
-	/* throw error if just actual is NULL */
-	if (actual == NULL)
-	{
+	if (actual == NULL) {
 		UnityTestResultsFailBegin(lineNumber);
 		UnityPrint(UnityStrNullPointerForActual);
 		UnityAddMsgIfSpecified(msg);
 		UNITY_FAIL_AND_BAIL;
 	}
 
-	/* return false if neither is NULL */
 	return 0;
 }
 
