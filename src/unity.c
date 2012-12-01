@@ -4,7 +4,6 @@
  */
 
 #include "unity.h"
-#include "emftext.h"
 #include <stdio.h>
 #include <string.h>
 

@@ -42,6 +42,22 @@
 // Parameterized Tests
 //	 - you'll want to create a define of TEST_CASE(...) which basically evaluates to nothing
 
+/*
+ * Text formatting
+ */
+#define EMF_TEXT_BLACK		"\x1b[30m"
+#define EMF_TEXT_RED		"\x1b[31m"
+#define EMF_TEXT_GREEN		"\x1b[32m"
+#define EMF_TEXT_YELLOW		"\x1b[33m"
+#define EMF_TEXT_BLUE		"\x1b[34m"
+#define EMF_TEXT_MAGENTA	"\x1b[35m"
+#define EMF_TEXT_CYAN		"\x1b[36m"
+#define EMF_TEXT_WHITE		"\x1b[37m"
+
+#define EMF_TEXT_NORMAL		"\x1b[0m"
+#define EMF_TEXT_BOLD		"\x1b[1m"
+#define EMF_TEXT_UNDERSCORE	"\x1b[4m"
+
 //-------------------------------------------------------
 // Test Running Macros
 //-------------------------------------------------------
