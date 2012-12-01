@@ -146,9 +146,11 @@
 #define TEST_ASSERT_BITS_LOW(mask, actual) \
 	UNITY_TEST_ASSERT_BITS((mask), (_UU32)(0), (actual), __LINE__, NULL)
 #define TEST_ASSERT_BIT_HIGH(bit, actual) \
-	UNITY_TEST_ASSERT_BITS(((_UU32)1 << bit), (_UU32)(-1), (actual), __LINE__, NULL)
+	UNITY_TEST_ASSERT_BITS(((_UU32)1 << bit), (_UU32)(-1), \
+			(actual), __LINE__, NULL)
 #define TEST_ASSERT_BIT_LOW(bit, actual) \
-	UNITY_TEST_ASSERT_BITS(((_UU32)1 << bit), (_UU32)(0), (actual), __LINE__, NULL)
+	UNITY_TEST_ASSERT_BITS(((_UU32)1 << bit), (_UU32)(0), \
+			(actual), __LINE__, NULL)
 
 /* Integer Ranges (of all sizes) */
 #define TEST_ASSERT_INT_WITHIN(delta, expected, actual) \
@@ -171,27 +173,64 @@
 	UNITY_TEST_ASSERT_EQUAL_PTR((expected), (actual), __LINE__, NULL)
 #define TEST_ASSERT_EQUAL_STRING(expected, actual) \
 	UNITY_TEST_ASSERT_EQUAL_STRING(expected, actual, __LINE__, NULL)
-#define TEST_ASSERT_EQUAL_MEMORY(expected, actual, len)		UNITY_TEST_ASSERT_EQUAL_MEMORY(expected, actual, len, __LINE__, NULL)
+#define TEST_ASSERT_EQUAL_MEMORY(expected, actual, len) \
+	UNITY_TEST_ASSERT_EQUAL_MEMORY(expected, actual, len, __LINE__, NULL)
 
 /* Arrays */
-#define TEST_ASSERT_EQUAL_INT_ARRAY(expected, actual, num_elements)UNITY_TEST_ASSERT_EQUAL_INT_ARRAY(expected, actual, num_elements, __LINE__, NULL)
-#define TEST_ASSERT_EQUAL_INT8_ARRAY(expected, actual, num_elements)   UNITY_TEST_ASSERT_EQUAL_INT8_ARRAY(expected, actual, num_elements, __LINE__, NULL)
-#define TEST_ASSERT_EQUAL_INT16_ARRAY(expected, actual, num_elements)  UNITY_TEST_ASSERT_EQUAL_INT16_ARRAY(expected, actual, num_elements, __LINE__, NULL)
-#define TEST_ASSERT_EQUAL_INT32_ARRAY(expected, actual, num_elements)  UNITY_TEST_ASSERT_EQUAL_INT32_ARRAY(expected, actual, num_elements, __LINE__, NULL)
-#define TEST_ASSERT_EQUAL_INT64_ARRAY(expected, actual, num_elements)  UNITY_TEST_ASSERT_EQUAL_INT64_ARRAY(expected, actual, num_elements, __LINE__, NULL)
-#define TEST_ASSERT_EQUAL_UINT_ARRAY(expected, actual, num_elements)   UNITY_TEST_ASSERT_EQUAL_UINT_ARRAY(expected, actual, num_elements, __LINE__, NULL)
-#define TEST_ASSERT_EQUAL_UINT8_ARRAY(expected, actual, num_elements)  UNITY_TEST_ASSERT_EQUAL_UINT8_ARRAY(expected, actual, num_elements, __LINE__, NULL)
-#define TEST_ASSERT_EQUAL_UINT16_ARRAY(expected, actual, num_elements) UNITY_TEST_ASSERT_EQUAL_UINT16_ARRAY(expected, actual, num_elements, __LINE__, NULL)
-#define TEST_ASSERT_EQUAL_UINT32_ARRAY(expected, actual, num_elements) UNITY_TEST_ASSERT_EQUAL_UINT32_ARRAY(expected, actual, num_elements, __LINE__, NULL)
-#define TEST_ASSERT_EQUAL_UINT64_ARRAY(expected, actual, num_elements) UNITY_TEST_ASSERT_EQUAL_UINT64_ARRAY(expected, actual, num_elements, __LINE__, NULL)
-#define TEST_ASSERT_EQUAL_HEX_ARRAY(expected, actual, num_elements)UNITY_TEST_ASSERT_EQUAL_HEX32_ARRAY(expected, actual, num_elements, __LINE__, NULL)
-#define TEST_ASSERT_EQUAL_HEX8_ARRAY(expected, actual, num_elements)   UNITY_TEST_ASSERT_EQUAL_HEX8_ARRAY(expected, actual, num_elements, __LINE__, NULL)
-#define TEST_ASSERT_EQUAL_HEX16_ARRAY(expected, actual, num_elements)  UNITY_TEST_ASSERT_EQUAL_HEX16_ARRAY(expected, actual, num_elements, __LINE__, NULL)
-#define TEST_ASSERT_EQUAL_HEX32_ARRAY(expected, actual, num_elements)  UNITY_TEST_ASSERT_EQUAL_HEX32_ARRAY(expected, actual, num_elements, __LINE__, NULL)
-#define TEST_ASSERT_EQUAL_HEX64_ARRAY(expected, actual, num_elements)  UNITY_TEST_ASSERT_EQUAL_HEX64_ARRAY(expected, actual, num_elements, __LINE__, NULL)
-#define TEST_ASSERT_EQUAL_PTR_ARRAY(expected, actual, num_elements)UNITY_TEST_ASSERT_EQUAL_PTR_ARRAY(expected, actual, num_elements, __LINE__, NULL)
-#define TEST_ASSERT_EQUAL_STRING_ARRAY(expected, actual, num_elements) UNITY_TEST_ASSERT_EQUAL_STRING_ARRAY(expected, actual, num_elements, __LINE__, NULL)
-#define TEST_ASSERT_EQUAL_MEMORY_ARRAY(expected, actual, len, num_elements)		UNITY_TEST_ASSERT_EQUAL_MEMORY_ARRAY(expected, actual, len, num_elements, __LINE__, NULL)
+#define TEST_ASSERT_EQUAL_INT_ARRAY(expected, actual, num_elements) \
+	UNITY_TEST_ASSERT_EQUAL_INT_ARRAY(expected, actual, \
+			num_elements, __LINE__, NULL)
+#define TEST_ASSERT_EQUAL_INT8_ARRAY(expected, actual, num_elements) \
+	UNITY_TEST_ASSERT_EQUAL_INT8_ARRAY(expected, actual, \
+			num_elements, __LINE__, NULL)
+#define TEST_ASSERT_EQUAL_INT16_ARRAY(expected, actual, num_elements) \
+	UNITY_TEST_ASSERT_EQUAL_INT16_ARRAY(expected, actual, \
+			num_elements, __LINE__, NULL)
+#define TEST_ASSERT_EQUAL_INT32_ARRAY(expected, actual, num_elements) \
+	UNITY_TEST_ASSERT_EQUAL_INT32_ARRAY(expected, actual, \
+			num_elements, __LINE__, NULL)
+#define TEST_ASSERT_EQUAL_INT64_ARRAY(expected, actual, num_elements) \
+	UNITY_TEST_ASSERT_EQUAL_INT64_ARRAY(expected, actual, \
+			num_elements, __LINE__, NULL)
+#define TEST_ASSERT_EQUAL_UINT_ARRAY(expected, actual, num_elements) \
+	UNITY_TEST_ASSERT_EQUAL_UINT_ARRAY(expected, actual, \
+			num_elements, __LINE__, NULL)
+#define TEST_ASSERT_EQUAL_UINT8_ARRAY(expected, actual, num_elements) \
+	UNITY_TEST_ASSERT_EQUAL_UINT8_ARRAY(expected, actual, \
+			num_elements, __LINE__, NULL)
+#define TEST_ASSERT_EQUAL_UINT16_ARRAY(expected, actual, num_elements) \
+	UNITY_TEST_ASSERT_EQUAL_UINT16_ARRAY(expected, actual, \
+			num_elements, __LINE__, NULL)
+#define TEST_ASSERT_EQUAL_UINT32_ARRAY(expected, actual, num_elements) \
+	UNITY_TEST_ASSERT_EQUAL_UINT32_ARRAY(expected, actual, \
+			num_elements, __LINE__, NULL)
+#define TEST_ASSERT_EQUAL_UINT64_ARRAY(expected, actual, num_elements) \
+	UNITY_TEST_ASSERT_EQUAL_UINT64_ARRAY(expected, actual, \
+			num_elements, __LINE__, NULL)
+#define TEST_ASSERT_EQUAL_HEX_ARRAY(expected, actual, num_elements) \
+	UNITY_TEST_ASSERT_EQUAL_HEX32_ARRAY(expected, actual, \
+			num_elements, __LINE__, NULL)
+#define TEST_ASSERT_EQUAL_HEX8_ARRAY(expected, actual, num_elements) \
+	UNITY_TEST_ASSERT_EQUAL_HEX8_ARRAY(expected, actual, \
+			num_elements, __LINE__, NULL)
+#define TEST_ASSERT_EQUAL_HEX16_ARRAY(expected, actual, num_elements) \
+	UNITY_TEST_ASSERT_EQUAL_HEX16_ARRAY(expected, actual, \
+			num_elements, __LINE__, NULL)
+#define TEST_ASSERT_EQUAL_HEX32_ARRAY(expected, actual, num_elements) \
+	UNITY_TEST_ASSERT_EQUAL_HEX32_ARRAY(expected, actual, \
+			num_elements, __LINE__, NULL)
+#define TEST_ASSERT_EQUAL_HEX64_ARRAY(expected, actual, num_elements) \
+	UNITY_TEST_ASSERT_EQUAL_HEX64_ARRAY(expected, actual, \
+			num_elements, __LINE__, NULL)
+#define TEST_ASSERT_EQUAL_PTR_ARRAY(expected, actual, num_elements) \
+	UNITY_TEST_ASSERT_EQUAL_PTR_ARRAY(expected, actual, \
+			num_elements, __LINE__, NULL)
+#define TEST_ASSERT_EQUAL_STRING_ARRAY(expected, actual, num_elements) \
+	UNITY_TEST_ASSERT_EQUAL_STRING_ARRAY(expected, actual, \
+			num_elements, __LINE__, NULL)
+#define TEST_ASSERT_EQUAL_MEMORY_ARRAY(expected, actual, len, num_elements) \
+	UNITY_TEST_ASSERT_EQUAL_MEMORY_ARRAY(expected, actual, len, \
+			num_elements, __LINE__, NULL)
 
 /* Floating Point (if enabled) */
 #define TEST_ASSERT_FLOAT_WITHIN(delta, expected, actual) \
@@ -199,7 +238,8 @@
 #define TEST_ASSERT_EQUAL_FLOAT(expected, actual) \
 	UNITY_TEST_ASSERT_EQUAL_FLOAT(expected, actual, __LINE__, NULL)
 #define TEST_ASSERT_EQUAL_FLOAT_ARRAY(expected, actual, num_elements) \
-	UNITY_TEST_ASSERT_EQUAL_FLOAT_ARRAY(expected, actual, num_elements, __LINE__, NULL)
+	UNITY_TEST_ASSERT_EQUAL_FLOAT_ARRAY(expected, actual, \
+			num_elements, __LINE__, NULL)
 #define TEST_ASSERT_FLOAT_IS_INF(actual) \
 	UNITY_TEST_ASSERT_FLOAT_IS_INF(actual, __LINE__, NULL)
 #define TEST_ASSERT_FLOAT_IS_NEG_INF(actual) \
@@ -213,7 +253,8 @@
 #define TEST_ASSERT_EQUAL_DOUBLE(expected, actual) \
 	UNITY_TEST_ASSERT_EQUAL_DOUBLE(expected, actual, __LINE__, NULL)
 #define TEST_ASSERT_EQUAL_DOUBLE_ARRAY(expected, actual, num_elements) \
-	UNITY_TEST_ASSERT_EQUAL_DOUBLE_ARRAY(expected, actual, num_elements, __LINE__, NULL)
+	UNITY_TEST_ASSERT_EQUAL_DOUBLE_ARRAY(expected, actual, \
+			num_elements, __LINE__, NULL)
 #define TEST_ASSERT_DOUBLE_IS_INF(actual) \
 	UNITY_TEST_ASSERT_DOUBLE_IS_INF(actual, __LINE__, NULL)
 #define TEST_ASSERT_DOUBLE_IS_NEG_INF(actual) \
@@ -224,7 +265,8 @@
 /* Test Asserts (with additional messages) */
 
 /* Boolean */
-#define TEST_ASSERT_MESSAGE(condition, message)UNITY_TEST_ASSERT((condition), __LINE__, message)
+#define TEST_ASSERT_MESSAGE(condition, message) \
+	UNITY_TEST_ASSERT((condition), __LINE__, message)
 #define TEST_ASSERT_TRUE_MESSAGE(condition, message) \
 	UNITY_TEST_ASSERT((condition), __LINE__, message)
 #define TEST_ASSERT_UNLESS_MESSAGE(condition, message) \
@@ -278,9 +320,11 @@
 #define TEST_ASSERT_BITS_LOW_MESSAGE(mask, actual, message) \
 	UNITY_TEST_ASSERT_BITS((mask), (_UU32)(0), (actual), __LINE__, message)
 #define TEST_ASSERT_BIT_HIGH_MESSAGE(bit, actual, message) \
-	UNITY_TEST_ASSERT_BITS(((_UU32)1 << bit), (_UU32)(-1), (actual), __LINE__, message)
+	UNITY_TEST_ASSERT_BITS(((_UU32)1 << bit), (_UU32)(-1), \
+			(actual), __LINE__, message)
 #define TEST_ASSERT_BIT_LOW_MESSAGE(bit, actual, message) \
-	UNITY_TEST_ASSERT_BITS(((_UU32)1 << bit), (_UU32)(0), (actual), __LINE__, message)
+	UNITY_TEST_ASSERT_BITS(((_UU32)1 << bit), (_UU32)(0), \
+			(actual), __LINE__, message)
 
 /* Integer Ranges (of all sizes) */
 #define TEST_ASSERT_INT_WITHIN_MESSAGE(delta, expected, actual, message) \
