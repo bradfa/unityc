@@ -10,41 +10,51 @@
 
 #include "unity_internals.h"
 
-//-------------------------------------------------------
-// Configuration Options
-//-------------------------------------------------------
-
-// Integers
-//	 - Unity assumes 32 bit integers by default
-//	 - If your compiler treats ints of a different size, define UNITY_INT_WIDTH
-
-// Floats
-//	 - define UNITY_EXCLUDE_FLOAT to disallow floating point comparisons
-//	 - define UNITY_FLOAT_PRECISION to specify the precision to use when doing TEST_ASSERT_EQUAL_FLOAT
-//	 - define UNITY_FLOAT_TYPE to specify doubles instead of single precision floats
-//	 - define UNITY_FLOAT_VERBOSE to print floating point values in errors (uses sprintf)
-//	 - define UNITY_INCLUDE_DOUBLE to allow double floating point comparisons
-//	 - define UNITY_EXCLUDE_DOUBLE to disallow double floating point comparisons (default)
-//	 - define UNITY_DOUBLE_PRECISION to specify the precision to use when doing TEST_ASSERT_EQUAL_DOUBLE
-//	 - define UNITY_DOUBLE_TYPE to specify something other than double
-//	 - define UNITY_DOUBLE_VERBOSE to print floating point values in errors (uses sprintf)
-
-// Output
-//	 - by default, Unity prints to standard out with putchar.  define UNITY_OUTPUT_CHAR(a) with a different function if desired
-
-// Optimization
-//	 - by default, line numbers are stored in unsigned shorts.  Define UNITY_LINE_TYPE with a different type if your files are huge
-//	 - by default, test and failure counters are unsigned shorts.  Define UNITY_COUNTER_TYPE with a different type if you want to save space or have more than 65535 Tests.
-
-// Test Cases
-//	 - define UNITY_SUPPORT_TEST_CASES to include the TEST_CASE macro, though really it's mostly about the runner generator script
-
-// Parameterized Tests
-//	 - you'll want to create a define of TEST_CASE(...) which basically evaluates to nothing
-
-/*
- * Text formatting
+/* Configuration Options
+ *
+ * Integers -
+ * Unity assumes 32 bit integers by default. If your compiler treats ints of a
+ * different size, define UNITY_INT_WIDTH
+ *
+ * Floats -
+ * Define UNITY_EXCLUDE_FLOAT to disallow floating point comparisons.
+ * Define UNITY_FLOAT_PRECISION to specify the precision to use when doing
+ * TEST_ASSERT_EQUAL_FLOAT.
+ * Define UNITY_FLOAT_TYPE to specify doubles instead of single precision
+ * floats.
+ * Define UNITY_FLOAT_VERBOSE to print floating point values in errors (uses
+ * sprintf).
+ * Define UNITY_INCLUDE_DOUBLE to allow double floating point comparisons.
+ * Define UNITY_EXCLUDE_DOUBLE to disallow double floating point comparisons
+ * (default).
+ * Define UNITY_DOUBLE_PRECISION to specify the precision to use when doing
+ * TEST_ASSERT_EQUAL_DOUBLE.
+ * Define UNITY_DOUBLE_TYPE to specify something other than double.
+ * Define UNITY_DOUBLE_VERBOSE to print floating point values in errors (uses
+ * sprintf).
+ *
+ * Output -
+ * By default, Unity prints to standard out with putchar.  Define
+ * UNITY_OUTPUT_CHAR(a) with a different function if desired.
+ *
+ * Optimization -
+ * By default, line numbers are stored in unsigned shorts.  Define
+ * UNITY_LINE_TYPE with a different type if your files are huge - by default,
+ * test and failure counters are unsigned shorts.
+ * Define UNITY_COUNTER_TYPE with a different type if you want to save space or
+ * have more than 65535 Tests.
+ *
+ * Test Cases -
+ * Define UNITY_SUPPORT_TEST_CASES to include the TEST_CASE macro, though really
+ * it's mostly about the runner generator script.
+ *
+ * Parameterized Tests -
+ * You'll want to create a define of TEST_CASE(...) which basically evaluates to
+ * nothing.
  */
+
+/* Text formatting */
+
 #define EMF_TEXT_BLACK		"\x1b[30m"
 #define EMF_TEXT_RED		"\x1b[31m"
 #define EMF_TEXT_GREEN		"\x1b[32m"
@@ -58,12 +68,9 @@
 #define EMF_TEXT_BOLD		"\x1b[1m"
 #define EMF_TEXT_UNDERSCORE	"\x1b[4m"
 
-//-------------------------------------------------------
-// Test Running Macros
-//-------------------------------------------------------
+/* Test Running Macros */
 
 #define TEST_PROTECT() (setjmp(Unity.AbortFrame) == 0)
-
 #define TEST_ABORT() {longjmp(Unity.AbortFrame, 1);}
 
 #ifndef RUN_TEST
@@ -73,9 +80,7 @@
 #define TEST_LINE_NUM (Unity.CurrentTestLineNumber)
 #define TEST_IS_IGNORED (Unity.CurrentTestIgnored)
 
-//-------------------------------------------------------
-// Basic Fail and Ignore
-//-------------------------------------------------------
+/* Basic Fail and Ignore */
 
 #define TEST_FAIL_MESSAGE(message)	UNITY_TEST_FAIL(__LINE__, message)
 #define TEST_FAIL()			UNITY_TEST_FAIL(__LINE__, NULL)
@@ -83,11 +88,9 @@
 #define TEST_IGNORE()			UNITY_TEST_IGNORE(__LINE__, NULL)
 #define TEST_ONLY()
 
-//-------------------------------------------------------
-// Test Asserts (simple)
-//-------------------------------------------------------
+/* Test Asserts (simple) */
 
-//Boolean
+/* Boolean */
 #define TEST_ASSERT(condition) \
 	UNITY_TEST_ASSERT((condition), __LINE__, " Expression Evaluated To FALSE")
 #define TEST_ASSERT_TRUE(condition) \
@@ -101,7 +104,7 @@
 #define TEST_ASSERT_NOT_NULL(pointer) \
 	UNITY_TEST_ASSERT_NOT_NULL((pointer), __LINE__, " Expected Non-NULL")
 
-//Integers (of all sizes)
+/* Integers (of all sizes) */
 #define TEST_ASSERT_EQUAL_INT(expected, actual) \
 	UNITY_TEST_ASSERT_EQUAL_INT((expected), (actual), __LINE__, NULL)
 #define TEST_ASSERT_EQUAL_INT8(expected, actual) \
@@ -147,7 +150,7 @@
 #define TEST_ASSERT_BIT_LOW(bit, actual) \
 	UNITY_TEST_ASSERT_BITS(((_UU32)1 << bit), (_UU32)(0), (actual), __LINE__, NULL)
 
-//Integer Ranges (of all sizes)
+/* Integer Ranges (of all sizes) */
 #define TEST_ASSERT_INT_WITHIN(delta, expected, actual) \
 	UNITY_TEST_ASSERT_INT_WITHIN(delta, expected, actual, __LINE__, NULL)
 #define TEST_ASSERT_UINT_WITHIN(delta, expected, actual) \
@@ -163,14 +166,14 @@
 #define TEST_ASSERT_HEX64_WITHIN(delta, expected, actual) \
 	UNITY_TEST_ASSERT_HEX64_WITHIN(delta, expected, actual, __LINE__, NULL)
 
-//Structs and Strings
+/* Structs and Strings */
 #define TEST_ASSERT_EQUAL_PTR(expected, actual) \
 	UNITY_TEST_ASSERT_EQUAL_PTR((expected), (actual), __LINE__, NULL)
 #define TEST_ASSERT_EQUAL_STRING(expected, actual) \
 	UNITY_TEST_ASSERT_EQUAL_STRING(expected, actual, __LINE__, NULL)
 #define TEST_ASSERT_EQUAL_MEMORY(expected, actual, len)		UNITY_TEST_ASSERT_EQUAL_MEMORY(expected, actual, len, __LINE__, NULL)
 
-//Arrays
+/* Arrays */
 #define TEST_ASSERT_EQUAL_INT_ARRAY(expected, actual, num_elements)UNITY_TEST_ASSERT_EQUAL_INT_ARRAY(expected, actual, num_elements, __LINE__, NULL)
 #define TEST_ASSERT_EQUAL_INT8_ARRAY(expected, actual, num_elements)   UNITY_TEST_ASSERT_EQUAL_INT8_ARRAY(expected, actual, num_elements, __LINE__, NULL)
 #define TEST_ASSERT_EQUAL_INT16_ARRAY(expected, actual, num_elements)  UNITY_TEST_ASSERT_EQUAL_INT16_ARRAY(expected, actual, num_elements, __LINE__, NULL)
@@ -190,7 +193,7 @@
 #define TEST_ASSERT_EQUAL_STRING_ARRAY(expected, actual, num_elements) UNITY_TEST_ASSERT_EQUAL_STRING_ARRAY(expected, actual, num_elements, __LINE__, NULL)
 #define TEST_ASSERT_EQUAL_MEMORY_ARRAY(expected, actual, len, num_elements)		UNITY_TEST_ASSERT_EQUAL_MEMORY_ARRAY(expected, actual, len, num_elements, __LINE__, NULL)
 
-//Floating Point (If Enabled)
+/* Floating Point (if enabled) */
 #define TEST_ASSERT_FLOAT_WITHIN(delta, expected, actual) \
 	UNITY_TEST_ASSERT_FLOAT_WITHIN(delta, expected, actual, __LINE__, NULL)
 #define TEST_ASSERT_EQUAL_FLOAT(expected, actual) \
@@ -204,7 +207,7 @@
 #define TEST_ASSERT_FLOAT_IS_NAN(actual) \
 	UNITY_TEST_ASSERT_FLOAT_IS_NAN(actual, __LINE__, NULL)
 
-//Double (If Enabled)
+/* Double (if enabled) */
 #define TEST_ASSERT_DOUBLE_WITHIN(delta, expected, actual) \
 	UNITY_TEST_ASSERT_DOUBLE_WITHIN(delta, expected, actual, __LINE__, NULL)
 #define TEST_ASSERT_EQUAL_DOUBLE(expected, actual) \
@@ -218,11 +221,9 @@
 #define TEST_ASSERT_DOUBLE_IS_NAN(actual) \
 	UNITY_TEST_ASSERT_DOUBLE_IS_NAN(actual, __LINE__, NULL)
 
-//-------------------------------------------------------
-// Test Asserts (with additional messages)
-//-------------------------------------------------------
+/* Test Asserts (with additional messages) */
 
-//Boolean
+/* Boolean */
 #define TEST_ASSERT_MESSAGE(condition, message)UNITY_TEST_ASSERT((condition), __LINE__, message)
 #define TEST_ASSERT_TRUE_MESSAGE(condition, message) \
 	UNITY_TEST_ASSERT((condition), __LINE__, message)
@@ -235,7 +236,7 @@
 #define TEST_ASSERT_NOT_NULL_MESSAGE(pointer, message) \
 	UNITY_TEST_ASSERT_NOT_NULL((pointer), __LINE__, message)
 
-//Integers (of all sizes)
+/* Integers (of all sizes) */
 #define TEST_ASSERT_EQUAL_INT_MESSAGE(expected, actual, message) \
 	UNITY_TEST_ASSERT_EQUAL_INT((expected), (actual), __LINE__, message)
 #define TEST_ASSERT_EQUAL_INT8_MESSAGE(expected, actual, message) \
@@ -281,7 +282,7 @@
 #define TEST_ASSERT_BIT_LOW_MESSAGE(bit, actual, message) \
 	UNITY_TEST_ASSERT_BITS(((_UU32)1 << bit), (_UU32)(0), (actual), __LINE__, message)
 
-//Integer Ranges (of all sizes)
+/* Integer Ranges (of all sizes) */
 #define TEST_ASSERT_INT_WITHIN_MESSAGE(delta, expected, actual, message) \
 	UNITY_TEST_ASSERT_INT_WITHIN(delta, expected, actual, __LINE__, message)
 #define TEST_ASSERT_UINT_WITHIN_MESSAGE(delta, expected, actual, message) \
@@ -297,7 +298,7 @@
 #define TEST_ASSERT_HEX64_WITHIN_MESSAGE(delta, expected, actual, message) \
 	UNITY_TEST_ASSERT_HEX64_WITHIN(delta, expected, actual, __LINE__, message)
 
-//Structs and Strings
+/* Structs and Strings */
 #define TEST_ASSERT_EQUAL_PTR_MESSAGE(expected, actual, message) \
 	UNITY_TEST_ASSERT_EQUAL_PTR(expected, actual, __LINE__, message)
 #define TEST_ASSERT_EQUAL_STRING_MESSAGE(expected, actual, message) \
@@ -305,7 +306,7 @@
 #define TEST_ASSERT_EQUAL_MEMORY_MESSAGE(expected, actual, len, message) \
 	UNITY_TEST_ASSERT_EQUAL_MEMORY(expected, actual, len, __LINE__, message)
 
-//Arrays
+/* Arrays */
 #define TEST_ASSERT_EQUAL_INT_ARRAY_MESSAGE(expected, actual, num_elements, message) \
 	UNITY_TEST_ASSERT_EQUAL_INT_ARRAY(expected, actual, num_elements, __LINE__, message)
 #define TEST_ASSERT_EQUAL_INT8_ARRAY_MESSAGE(expected, actual, num_elements, message) \
@@ -343,7 +344,7 @@
 #define TEST_ASSERT_EQUAL_MEMORY_ARRAY_MESSAGE(expected, actual, len, num_elements, message) \
 	UNITY_TEST_ASSERT_EQUAL_MEMORY_ARRAY(expected, actual, len, num_elements, __LINE__, message)
 
-//Floating Point (If Enabled)
+/* Floating Point (if enabled) */
 #define TEST_ASSERT_FLOAT_WITHIN_MESSAGE(delta, expected, actual, message) \
 	UNITY_TEST_ASSERT_FLOAT_WITHIN(delta, expected, actual, __LINE__, message)
 #define TEST_ASSERT_EQUAL_FLOAT_MESSAGE(expected, actual, message) \
@@ -357,7 +358,7 @@
 #define TEST_ASSERT_FLOAT_IS_NAN_MESSAGE(actual, message) \
 	UNITY_TEST_ASSERT_FLOAT_IS_NAN(actual, __LINE__, message)
 
-//Double (If Enabled)
+/* Double (if enabled) */
 #define TEST_ASSERT_DOUBLE_WITHIN_MESSAGE(delta, expected, actual, message) \
 	UNITY_TEST_ASSERT_DOUBLE_WITHIN(delta, expected, actual, __LINE__, message)
 #define TEST_ASSERT_EQUAL_DOUBLE_MESSAGE(expected, actual, message) \
