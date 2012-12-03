@@ -35,9 +35,4 @@ void UnityPointer_Set(void ** ptr, void * newValue);
 void UnityPointer_UndoAllSets();
 void UnityPointer_Init();
 
-void UnityAssertEqualPointer(const void * expected,
-							const void * actual,
-							const char* msg,
-							const UNITY_LINE_TYPE lineNumber);
-
 #endif /* UNITY_FIXTURE_INTERNALS_H_ */
