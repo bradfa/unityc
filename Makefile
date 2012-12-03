@@ -3,7 +3,7 @@
 
 TARGET = testunity.out
 SRC_FILES=src/unity.c test/testunity.c test/testunity_Runner.c
-INC_DIRS=-Isrc
+INC_DIRS=-Iinclude
 SYMBOLS=-DTEST -DUNITY_SUPPORT_64 -DUNITY_INCLUDE_DOUBLE
 
 all: default
