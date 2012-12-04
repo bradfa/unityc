@@ -10,12 +10,12 @@
 
 UNITY_FIXTURE_T UnityFixture;
 
-//If you decide to use the function pointer approach.
+/* For using function pointers */
 int (*outputChar)(int) = putchar;
 
 int verbose = 0;
 
-void setUp(void)	{ /*does nothing*/ }
+void setUp(void) { /*does nothing*/ }
 void tearDown(void) { /*does nothing*/ }
 
 void announceTestRun(unsigned int runNumber)
@@ -27,7 +27,7 @@ void announceTestRun(unsigned int runNumber)
 	UNITY_OUTPUT_CHAR('\n');
 }
 
-int UnityMain(int argc, char* argv[], void (*runAllTests)())
+int UnityMain(int argc, char *argv[], void (*runAllTests)())
 {
 	int result = UnityGetCommandLineOptions(argc, argv);
 	unsigned int r;
@@ -46,19 +46,19 @@ int UnityMain(int argc, char* argv[], void (*runAllTests)())
 	return UnityFailureCount();
 }
 
-static int selected(const char * filter, const char * name)
+static int selected(const char *filter, const char *name)
 {
 	if (filter == 0)
 		return 1;
 	return strstr(name, filter) ? 1 : 0;
 }
 
-static int testSelected(const char* test)
+static int testSelected(const char *test)
 {
 	return selected(UnityFixture.NameFilter, test);
 }
 
-static int groupSelected(const char* group)
+static int groupSelected(const char *group)
 {
 	return selected(UnityFixture.GroupFilter, group);
 }
@@ -68,13 +68,13 @@ static void runTestCase()
 
 }
 
-void UnityTestRunner(unityfunction* setup,
-		unityfunction* testBody,
-		unityfunction* teardown,
-		const char * printableName,
-		const char * group,
-		const char * name,
-		const char * file, int line)
+void UnityTestRunner(unityfunction *setup,
+		unityfunction *testBody,
+		unityfunction *teardown,
+		const char *printableName,
+		const char *group,
+		const char *name,
+		const char *file, int line)
 {
 	if (testSelected(name) && groupSelected(group))
 	{
@@ -119,9 +119,8 @@ void UnityIgnoreTest()
 }
 
 
-//-------------------------------------------------
-//Malloc and free stuff
-//
+/* malloc() and free() overrides */
+
 #define MALLOC_DONT_FAIL -1
 static int malloc_count;
 static int malloc_fail_countdown = MALLOC_DONT_FAIL;
@@ -136,9 +135,7 @@ void UnityMalloc_EndTest()
 {
 	malloc_fail_countdown = MALLOC_DONT_FAIL;
 	if (malloc_count != 0)
-	{
 		TEST_FAIL_MESSAGE("This test leaks!");
-	}
 }
 
 void UnityMalloc_MakeMallocFailAfterCount(int countdown)
@@ -164,12 +161,12 @@ typedef struct GuardBytes
 } Guard;
 
 
-static const char * end = "END";
+static const char *end = "END";
 
-void * unity_malloc(size_t size)
+void *unity_malloc(size_t size)
 {
-	char* mem;
-	Guard* guard;
+	char *mem;
+	Guard *guard;
 
 	if (malloc_fail_countdown != MALLOC_DONT_FAIL)
 	{
@@ -180,54 +177,50 @@ void * unity_malloc(size_t size)
 
 	malloc_count++;
 
-	guard = (Guard*)malloc(size + sizeof(Guard) + 4);
+	guard = (Guard *)malloc(size + sizeof(Guard) + 4);
 	guard->size = size;
-	mem = (char*)&(guard[1]);
+	mem = (char *)&(guard[1]);
 	memcpy(&mem[size], end, strlen(end) + 1);
 
-	return (void*)mem;
+	return (void *)mem;
 }
 
-static int isOverrun(void * mem)
+static int isOverrun(void *mem)
 {
-	Guard* guard = (Guard*)mem;
-	char* memAsChar = (char*)mem;
+	Guard *guard = (Guard *)mem;
+	char *memAsChar = (char *)mem;
 	guard--;
 
 	return strcmp(&memAsChar[guard->size], end) != 0;
 }
 
-static void release_memory(void * mem)
+static void release_memory(void *mem)
 {
-	Guard* guard = (Guard*)mem;
+	Guard *guard = (Guard *)mem;
 	guard--;
-
 	malloc_count--;
 	free(guard);
 }
 
-void unity_free(void * mem)
+void unity_free(void *mem)
 {
-	int overrun = isOverrun(mem);//strcmp(&memAsChar[guard->size], end) != 0;
+	int overrun = isOverrun(mem);
 	release_memory(mem);
 	if (overrun)
-	{
 		TEST_FAIL_MESSAGE("Buffer overrun detected during free()");
-	}
 }
 
-void* unity_calloc(size_t num, size_t size)
+void *unity_calloc(size_t num, size_t size)
 {
-	void* mem = unity_malloc(num * size);
-	memset(mem, 0, num*size);
+	void *mem = unity_malloc(num * size);
+	memset(mem, 0, num * size);
 	return mem;
 }
 
-void* unity_realloc(void * oldMem, size_t size)
+void *unity_realloc(void *oldMem, size_t size)
 {
-	Guard* guard = (Guard*)oldMem;
-//	char* memAsChar = (char*)oldMem;
-	void* newMem;
+	Guard *guard = (Guard *)oldMem;
+	void *newMem;
 
 	if (oldMem == 0)
 		return unity_malloc(size);
@@ -254,14 +247,13 @@ void* unity_realloc(void * oldMem, size_t size)
 	return newMem;
 }
 
+/* Automatic pointer restoration functions */
 
-//--------------------------------------------------------
-//Automatic pointer restoration functions
 typedef struct _PointerPair
 {
-	struct _PointerPair * next;
-	void ** pointer;
-	void * old_value;
+	struct _PointerPair *next;
+	void **pointer;
+	void *old_value;
 } PointerPair;
 
 enum {MAX_POINTERS=50};
@@ -273,7 +265,7 @@ void UnityPointer_Init()
 	pointer_index = 0;
 }
 
-void UnityPointer_Set(void ** pointer, void * newValue)
+void UnityPointer_Set(void **pointer, void *newValue)
 {
 	if (pointer_index >= MAX_POINTERS)
 		TEST_FAIL_MESSAGE("Too many pointers set");
@@ -290,7 +282,7 @@ void UnityPointer_UndoAllSets()
 	{
 		pointer_index--;
 		*(pointer_store[pointer_index].pointer) =
-		pointer_store[pointer_index].old_value;
+			pointer_store[pointer_index].old_value;
 
 	}
 }
@@ -300,7 +292,7 @@ int UnityFailureCount()
 	return Unity.TestFailures;
 }
 
-int UnityGetCommandLineOptions(int argc, char* argv[])
+int UnityGetCommandLineOptions(int argc, char *argv[])
 {
 	int i;
 	UnityFixture.Verbose = 0;
