@@ -50,7 +50,7 @@ const _U_UINT UnitySizeMask[] =
 };
 
 void UnityPrintFail(void);
-void UnityPrintOk(void);
+void UnityPrintPass(void);
 
 void UnityPrint(const char* pch)
 {
@@ -179,12 +179,18 @@ void UnityPrintFloat(_UF number)
 
 void UnityPrintFail(void)
 {
+	UnityPrint(EMF_TEXT_BOLD);
+	UnityPrint(EMF_TEXT_RED);
 	UnityPrint("FAIL");
+	UnityPrint(EMF_TEXT_NORMAL);
 }
 
-void UnityPrintOk(void)
+void UnityPrintPass(void)
 {
-	UnityPrint("OK");
+	UnityPrint(EMF_TEXT_BOLD);
+	UnityPrint(EMF_TEXT_GREEN);
+	UnityPrint("PASS");
+	UnityPrint(EMF_TEXT_NORMAL);
 }
 
 void UnityTestResultsBegin(const char* file, const UNITY_LINE_TYPE line)
@@ -937,7 +943,7 @@ int UnityEnd(void)
 	UnityPrint(" Ignored");
 	UNITY_PRINT_EOL;
 	if (Unity.TestFailures == 0U)
-		UnityPrintOk();
+		UnityPrintPass();
 	else
 		UnityPrintFail();
 	UNITY_PRINT_EOL;
