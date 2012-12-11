@@ -217,36 +217,6 @@ void *unity_calloc(size_t num, size_t size)
 	return mem;
 }
 
-void *unity_realloc(void *oldMem, size_t size)
-{
-	Guard *guard = (Guard *)oldMem;
-	void *newMem;
-
-	if (oldMem == 0)
-		return unity_malloc(size);
-
-	guard--;
-	if (isOverrun(oldMem))
-	{
-		release_memory(oldMem);
-		TEST_FAIL_MESSAGE("Buffer overrun detected during realloc()");
-	}
-
-	if (size == 0)
-	{
-		release_memory(oldMem);
-		return 0;
-	}
-
-	if (guard->size >= size)
-		return oldMem;
-
-	newMem = unity_malloc(size);
-	memcpy(newMem, oldMem, guard->size);
-	unity_free(oldMem);
-	return newMem;
-}
-
 /* Automatic pointer restoration functions */
 
 typedef struct _PointerPair
