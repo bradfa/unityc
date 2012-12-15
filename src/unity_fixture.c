@@ -88,7 +88,6 @@ void UnityTestRunner(unityfunction *setup,
 			UnityPrint(printableName);
 
 		Unity.NumberOfTests++;
-		UnityMalloc_StartTest();
 		UnityPointer_Init();
 
 		runTestCase();
@@ -104,8 +103,6 @@ void UnityTestRunner(unityfunction *setup,
 		if (TEST_PROTECT())
 		{
 			UnityPointer_UndoAllSets();
-			if (!Unity.CurrentTestFailed)
-				UnityMalloc_EndTest();
 		}
 		UnityConcludeFixtureTest();
 	}
@@ -118,104 +115,8 @@ void UnityIgnoreTest()
 	UNITY_OUTPUT_CHAR('!');
 }
 
-
-/* malloc() and free() overrides */
-
-#define MALLOC_DONT_FAIL -1
-static int malloc_count;
-static int malloc_fail_countdown = MALLOC_DONT_FAIL;
-
-void UnityMalloc_StartTest()
-{
-	malloc_count = 0;
-	malloc_fail_countdown = MALLOC_DONT_FAIL;
-}
-
-void UnityMalloc_EndTest()
-{
-	malloc_fail_countdown = MALLOC_DONT_FAIL;
-	if (malloc_count != 0)
-		TEST_FAIL_MESSAGE("This test leaks!");
-}
-
-void UnityMalloc_MakeMallocFailAfterCount(int countdown)
-{
-	malloc_fail_countdown = countdown;
-}
-
-#ifdef malloc
-#undef malloc
-#endif
-
-#ifdef free
-#undef free
-#endif
-
 #include <stdlib.h>
 #include <string.h>
-
-typedef struct GuardBytes
-{
-	int size;
-	char guard[sizeof(int)];
-} Guard;
-
-
-static const char *end = "END";
-
-void *unity_malloc(size_t size)
-{
-	char *mem;
-	Guard *guard;
-
-	if (malloc_fail_countdown != MALLOC_DONT_FAIL)
-	{
-		if (malloc_fail_countdown == 0)
-			return 0;
-		malloc_fail_countdown--;
-	}
-
-	malloc_count++;
-
-	guard = (Guard *)malloc(size + sizeof(Guard) + 4);
-	guard->size = size;
-	mem = (char *)&(guard[1]);
-	memcpy(&mem[size], end, strlen(end) + 1);
-
-	return (void *)mem;
-}
-
-static int isOverrun(void *mem)
-{
-	Guard *guard = (Guard *)mem;
-	char *memAsChar = (char *)mem;
-	guard--;
-
-	return strcmp(&memAsChar[guard->size], end) != 0;
-}
-
-static void release_memory(void *mem)
-{
-	Guard *guard = (Guard *)mem;
-	guard--;
-	malloc_count--;
-	free(guard);
-}
-
-void unity_free(void *mem)
-{
-	int overrun = isOverrun(mem);
-	release_memory(mem);
-	if (overrun)
-		TEST_FAIL_MESSAGE("Buffer overrun detected during free()");
-}
-
-void *unity_calloc(size_t num, size_t size)
-{
-	void *mem = unity_malloc(num * size);
-	memset(mem, 0, num * size);
-	return mem;
-}
 
 /* Automatic pointer restoration functions */
 
